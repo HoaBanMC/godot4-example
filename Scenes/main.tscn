@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://ddprruc6xka5p"]
-
-[ext_resource type="PackedScene" uid="uid://csm8pfq1t0yqn" path="res://Scenes/test/bg_star_shader.tscn" id="1_4pr38"]
-
-[node name="Main" type="Node"]
-
-[node name="BgStarShader" parent="." instance=ExtResource("1_4pr38")]

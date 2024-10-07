@@ -1,0 +1,225 @@
+[gd_scene load_steps=11 format=3 uid="uid://nwqdknka2fhq"]
+
+[ext_resource type="Script" path="res://Scripts/main.gd" id="1_e0b2u"]
+[ext_resource type="PackedScene" uid="uid://bpthphc3a165r" path="res://Scenes/tree_sprite.tscn" id="2_687bp"]
+[ext_resource type="PackedScene" uid="uid://yurmvboylwqi" path="res://Scenes/score_click.tscn" id="4_oor4s"]
+[ext_resource type="FontFile" uid="uid://c6846gob8p70k" path="res://Assets/Fonts/Nunito-Regular.ttf" id="4_v4jig"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m2ebi"]
+bg_color = Color(0.627451, 0.839216, 0.513726, 0.686275)
+corner_radius_top_left = 250
+corner_radius_top_right = 250
+corner_radius_bottom_right = 250
+corner_radius_bottom_left = 250
+corner_detail = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ga3lj"]
+bg_color = Color(0.827451, 0.933333, 0.596078, 0.556863)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+corner_detail = 20
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6dq7d"]
+radius = 126.016
+
+[sub_resource type="Animation" id="Animation_sbdi4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TreeSprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_0kolk"]
+resource_name = "tap_cycle"
+length = 0.15
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0.5, 0.5), Vector2(-0.5, -0.5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TreeSprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.05, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0.5, 0.5), Vector2(-1, -1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wt53u"]
+_data = {
+"RESET": SubResource("Animation_sbdi4"),
+"tap_cycle": SubResource("Animation_0kolk")
+}
+
+[node name="Main" type="Node"]
+script = ExtResource("1_e0b2u")
+label_score_click = ExtResource("4_oor4s")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+metadata/_edit_lock_ = true
+
+[node name="Debug" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+metadata/_edit_lock_ = true
+
+[node name="Text" type="Control" parent="Debug"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 18.0
+offset_top = 21.0
+offset_bottom = 99.0
+grow_horizontal = 2
+
+[node name="ScoreLabel" type="Label" parent="Debug/Text"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_v4jig")
+text = "Score: 0"
+
+[node name="Buttons" type="Control" parent="Debug"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -33.0
+offset_right = 151.0
+grow_vertical = 0
+
+[node name="UpButton" type="Button" parent="Debug/Buttons"]
+layout_mode = 0
+offset_right = 37.0
+offset_bottom = 31.0
+text = "Up
+"
+
+[node name="DownButton" type="Button" parent="Debug/Buttons"]
+visible = false
+layout_mode = 0
+offset_left = 42.0
+offset_right = 95.0
+offset_bottom = 31.0
+text = "Down"
+
+[node name="ResetButton" type="Button" parent="Debug/Buttons"]
+layout_mode = 0
+offset_left = 45.0
+offset_top = -1.0
+offset_right = 96.0
+offset_bottom = 31.0
+text = "Reset
+"
+
+[node name="TreePos" type="Marker2D" parent="."]
+position = Vector2(187, 333)
+
+[node name="Control" type="Control" parent="TreePos"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Cycles" type="Panel" parent="TreePos/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -125.0
+offset_right = 125.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_m2ebi")
+
+[node name="Cycles2" type="Panel" parent="TreePos/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ga3lj")
+
+[node name="Effect" type="Node2D" parent="TreePos"]
+
+[node name="TreeSprite" parent="TreePos" instance=ExtResource("2_687bp")]
+position = Vector2(1, 1)
+scale = Vector2(0.4, 0.4)
+animation = &"idle10"
+
+[node name="TapArea" type="Area2D" parent="TreePos"]
+visible = false
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TreePos/TapArea"]
+shape = SubResource("CircleShape2D_6dq7d")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="TreePos"]
+libraries = {
+"": SubResource("AnimationLibrary_wt53u")
+}
+
+[connection signal="pressed" from="Debug/Buttons/UpButton" to="." method="_on_up_button_pressed"]
+[connection signal="pressed" from="Debug/Buttons/DownButton" to="." method="_on_down_button_pressed"]
+[connection signal="pressed" from="Debug/Buttons/ResetButton" to="." method="_on_reset_button_pressed"]
+[connection signal="input_event" from="TreePos/TapArea" to="." method="_on_tap_area_input_event"]

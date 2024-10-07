@@ -3,7 +3,7 @@ extends Node
 @onready var tree_postion: Marker2D = $TreePos
 @onready var tree_sprite: AnimatedSprite2D = $TreePos/TreeSprite
 @onready var animation_player: AnimationPlayer = $TreePos/AnimationPlayer
-
+@onready var texture_progress_bar: TextureProgressBar = $TreePos/Control/TextureProgressBar
 @export var label_score_click: PackedScene
 
 # for debugs
@@ -26,7 +26,7 @@ var list_trees = {
 }
 
 # variables
-var score: float = 0
+var score: int = 0
 var current_tree_name = "Apple"
 var current_tree
 var can_change_value = true
@@ -54,7 +54,7 @@ func _ready() -> void:
 	
 	
 func _on_has_up(_value):
-	can_click_score = true
+	can_click_score = _value
 	print(_value)
 
 func _input(event):
@@ -82,15 +82,12 @@ func _on_button_pressed() -> void:
 		
 		
 func change_value_score(_score) -> void:
-	if !can_click_score or (score >= 1000 and score > 0 ) or (score <= 0 and score < 0):
+	if !can_click_score or score >= 1000:
 		return
 		
 	score += _score
 	score_label.text = "Score: " + str(score)
-	
-	if int(score) in [100, 300, 600, 1000]:
-		can_click_score = false
-	
+	texture_progress_bar.value = score
 	tree_sprite.on_play_anim(score)
 		
 		
@@ -107,11 +104,11 @@ func _on_reset_button_pressed() -> void:
 	score_label.text = "Score: " + str(score)
 	
 	tree_sprite.play_idle(score)
-
+	change_value_score(0)
+	
 
 func _on_tap_area_input_event(_viewport: Node, _event: InputEvent, shape_idx: int) -> void:
-	if Input.is_action_just_pressed("left_click") and left_selected == false:
-		print(_event.position)
+	if Input.is_action_just_pressed("left_click") and !left_selected and can_click_score:
 		left_selected = true
 		animation_player.play("tap_cycle")
 		var _score_click = label_score_click.instantiate()

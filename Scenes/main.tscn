@@ -1,9 +1,18 @@
-[gd_scene load_steps=11 format=3 uid="uid://nwqdknka2fhq"]
+[gd_scene load_steps=13 format=3 uid="uid://nwqdknka2fhq"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_e0b2u"]
 [ext_resource type="PackedScene" uid="uid://bpthphc3a165r" path="res://Scenes/tree_sprite.tscn" id="2_687bp"]
 [ext_resource type="PackedScene" uid="uid://yurmvboylwqi" path="res://Scenes/score_click.tscn" id="4_oor4s"]
+[ext_resource type="Texture2D" uid="uid://bsvuq4tip3o48" path="res://Assets/Common/green-cycle.svg" id="4_s4gb7"]
 [ext_resource type="FontFile" uid="uid://c6846gob8p70k" path="res://Assets/Fonts/Nunito-Regular.ttf" id="4_v4jig"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pnqiv"]
+bg_color = Color(0.5148, 0.59224, 0.66, 1)
+corner_radius_top_left = 280
+corner_radius_top_right = 280
+corner_radius_bottom_right = 280
+corner_radius_bottom_left = 280
+corner_detail = 20
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m2ebi"]
 bg_color = Color(0.627451, 0.839216, 0.513726, 0.686275)
@@ -89,6 +98,7 @@ _data = {
 [node name="Main" type="Node"]
 script = ExtResource("1_e0b2u")
 label_score_click = ExtResource("4_oor4s")
+metadata/_edit_horizontal_guides_ = [175.0]
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 15
@@ -97,6 +107,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+color = Color(0.956863, 0.964706, 1, 1)
 metadata/_edit_lock_ = true
 
 [node name="Debug" type="Control" parent="."]
@@ -168,7 +179,25 @@ position = Vector2(187, 333)
 layout_mode = 3
 anchors_preset = 0
 
+[node name="Cycles3" type="Panel" parent="TreePos/Control"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -140.0
+offset_top = -140.0
+offset_right = 140.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pnqiv")
+
 [node name="Cycles" type="Panel" parent="TreePos/Control"]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -185,6 +214,7 @@ mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_m2ebi")
 
 [node name="Cycles2" type="Panel" parent="TreePos/Control"]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -199,6 +229,21 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ga3lj")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="TreePos/Control"]
+texture_filter = 2
+clip_contents = true
+custom_minimum_size = Vector2(280, 280)
+layout_mode = 0
+offset_left = -140.0
+offset_top = -140.0
+offset_right = 140.0
+offset_bottom = 140.0
+mouse_filter = 2
+value = 37.0
+rounded = true
+fill_mode = 4
+texture_progress = ExtResource("4_s4gb7")
 
 [node name="Effect" type="Node2D" parent="TreePos"]
 
